@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线证书验真系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "宋体", SimSun, "微软雅黑", sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #0055aa;
+            color: #fff;
+            text-align: center;
+            padding: 14px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        .tip {
+            color: #cc0000;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .lang-switch {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .lang-switch span {
+            color: #666;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .lang-switch a {
+            color: #666;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .info-list {
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            padding: 6px 0 6px 84px;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .info-label {
+            color: #666;
+            flex-shrink: 0;
+        }
+
+        .info-value {
+            flex: 1;
+            font-weight: normal;
+        }
+
+        .divider {
+            border-top: 1px dashed #ccc;
+            margin-bottom: 20px;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .qr-code {
+            width: 190px;
+            height: 190px;
+            background-color: #fff;
+            margin: 0 auto;
+            border: 1px solid #eee;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .qr-text {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #3366cc;
+            line-height: 1.8;
+        }
+
+        .footer {
+            background-color: #e5e5e5;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .footer-tip {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto;
+            background-color: #e5e5e5;
+        }
+
+        .badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header" id="header-text">在线证书验真系统</div>
+        <div class="content">
+            <div class="tip" id="tip-text">请校对证书上的信息是否与以下内容一致</div>
+            <div class="lang-switch">
+                <span id="lang-cn" onclick="switchLang('zh')">中文</span> | <a id="lang-en" onclick="switchLang('en')">English</a>
+            </div>
+            <div class="info-list">
+                <div class="info-item"><span class="info-label" id="label-certNo">证书编号：</span><span class="info-value">WS202501803</span></div>
+                <div class="info-item" id="item-certUnit"><span class="info-label" id="label-certUnit">证书单位：</span><span class="info-value">长平工程有限公司</span></div>
+                <div class="info-item" id="item-orderNo"><span class="info-label" id="label-orderNo">委托单号：</span><span class="info-value">2672577</span></div>
+                <div class="info-item" id="item-deviceNo"><span class="info-label" id="label-deviceNo">设备编号：</span><span class="info-value">---</span></div>
+                <div class="info-item" id="item-factoryNo"><span class="info-label" id="label-factoryNo">出厂编号：</span><span class="info-value">SSBX1512-0133</span></div>
+                <div class="info-item" id="item-calDate"><span class="info-label" id="label-calDate">校准日期：</span><span class="info-value">2025-10-17</span></div>
+            </div>
+            <div class="divider"></div>
+            <div class="qr-container">
+                <div class="qr-code">
+                    <img src="未命名码.png" alt="二维码">
+                </div>
+                <div class="qr-text" id="qr-text">
+                    长按二维码关注<br>广州计量 微信公众号
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-tip" id="footer-tip">查询数据仅供参考</div>
+            <div class="badge">
+                <img src="86283808ba86d121ed215f469463bfd1.png" alt="徽章">
+            </div>
+        </div>
+    </div>
+    <script>
+        var langData = {
+            zh: {
+                header: "在线证书验真系统",
+                tip: "请校对证书上的信息是否与以下内容一致",
+                langCn: "中文",
+                langEn: "English",
+                certNo: "证书编号：",
+                certUnit: "证书单位：",
+                orderNo: "委托单号：",
+                deviceNo: "设备编号：",
+                factoryNo: "出厂编号：",
+                calDate: "校准日期：",
+                qrText: "长按二维码关注<br>广州计量 微信公众号",
+                footerTip: "查询数据仅供参考"
+            },
+            en: {
+                header: "Certificate Verification System",
+                tip: "Please verify that the information on the certificate is consistent with the following",
+                langCn: "中文",
+                langEn: "English",
+                certNo:  "Certificate No.:",
+                certUnit:         "Client:",
+                orderNo:       "Order No.:",
+                deviceNo:  "Equipment No.:",
+                factoryNo:    "Serial No.:",
+                calDate:"Calibration Date:",
+                qrText: "Press and hold the QR code to follow<br>Guangzhou Metrology WeChat Official Account",
+                footerTip: "Tips:Information on this page is for reference only"
+            }
+        };
+
+        function switchLang(lang) {
+            document.getElementById('header-text').textContent = langData[lang].header;
+            document.getElementById('tip-text').textContent = langData[lang].tip;
+            document.getElementById('lang-cn').textContent = langData[lang].langCn;
+            document.getElementById('lang-en').textContent = langData[lang].langEn;
+            document.getElementById('label-certNo').textContent = langData[lang].certNo;
+            document.getElementById('label-certUnit').textContent = langData[lang].certUnit;
+            document.getElementById('label-orderNo').textContent = langData[lang].orderNo;
+            document.getElementById('label-deviceNo').textContent = langData[lang].deviceNo;
+            document.getElementById('label-factoryNo').textContent = langData[lang].factoryNo;
+            document.getElementById('label-calDate').textContent = langData[lang].calDate;
+            document.getElementById('qr-text').innerHTML = langData[lang].qrText;
+            document.getElementById('footer-tip').textContent = langData[lang].footerTip;
+
+            if (lang === 'zh') {
+                document.getElementById('lang-cn').style.color = '#333';
+                document.getElementById('lang-cn').style.fontWeight = 'bold';
+                document.getElementById('lang-en').style.color = '#666';
+                document.getElementById('lang-en').style.fontWeight = 'normal';
+                document.documentElement.lang = 'zh-CN';
+                document.querySelectorAll('.info-value').forEach(el => {
+                    el.style.textAlign = 'left';
+                    el.style.flex = '1';
+                });
+                document.querySelectorAll('.info-item').forEach(el => el.style.paddingLeft = '84px');
+            } else {
+                document.getElementById('lang-en').style.color = '#333';
+                document.getElementById('lang-en').style.fontWeight = 'bold';
+                document.getElementById('lang-cn').style.color = '#666';
+                document.getElementById('lang-cn').style.fontWeight = 'normal';
+                document.documentElement.lang = 'en';
+                document.querySelectorAll('.info-value').forEach(el => {
+                    el.style.textAlign = 'right';
+                    el.style.flex = 'none';
+                });
+                document.querySelectorAll('.info-item').forEach(el => el.style.paddingLeft = '42px');
+                document.getElementById('item-certUnit').style.paddingLeft = '105px';
+                document.getElementById('item-orderNo').style.paddingLeft = '84px';
+                document.getElementById('item-deviceNo').style.paddingLeft = '56px';
+                document.getElementById('item-factoryNo').style.paddingLeft = '77px';
+                document.getElementById('item-calDate').style.paddingLeft = '35px';
+            }
+        }
+    </script>
+</body>
+</html
